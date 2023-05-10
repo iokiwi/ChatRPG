@@ -29,10 +29,6 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-# import sys
-
-# sys.exit()
-
 with open("prompt.txt", "r") as f:
     initial_prompt = "".join(f.readlines())
 
@@ -70,4 +66,4 @@ while True:
         while prompt == "":
             prompt = input("> ").strip()
         game_messages.append({"role": "user", "content": prompt})
-        print
+        print()
