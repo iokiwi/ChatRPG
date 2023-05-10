@@ -9,35 +9,45 @@ Works pretty well with both GPT4 and GPT3.5
 
 ## How to play
 
-Just paste the contents of [prompt.txt](./prompt.txt) into [ChatGPT](https://chat.openai.com/) and allow yourself to become immersed.
+### In the browser
 
-### Meta
+ * Just paste the contents of [prompt.txt](./prompt.txt) into [ChatGPT](https://chat.openai.com/) and allow yourself to become immersed.
 
-Where normal commands allow the player to take actions in the game, commands prefixed with `/meta` to momentarily break character and take actions about the game. For example
+### In a text based terminal console
 
-  * Change the format of the output
-    ```
-    /meta Display the my inventory using the following format "${quantity} x ${item_name}"
-    ```
-    ```
-    Understood. Your current inventory is:
+1. Clone the repo and install the dependencies in a virtual environment
 
-    1 x small dagger
-    1 x torch
-    1 x waterskin (filled with fresh water)
-
-    Is there anything else you would like to do or explore in the cave?
+    ```bash
+    git clone https://github.com/iokiwi/ChatRPG.git
+    cd ChatRPG
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
     ```
 
-* /meta is really useful for helping to refine the initial prompt by interrogating the model to understanding how the model is adjudicating actions against the restrictions specified in the prompt.
+ 2. Get yourself an OpenAI account
+ 3. Find your organization ID (https://platform.openai.com/account/org-settings)
+ 4. Create an API key (https://platform.openai.com/account/api-keys)
+ 5. Populate your environment with your id and key
+    ```bash
+    cat << EOF > .env
+    OPENAI_API_KEY="<your api key>"
+    OPENAI_ORGANIZATION="<your organization>"
+    EOF
+    ```
+ 6. Start the game
+    ```bash
+    python chatrpg.py
+    ```
 
-    ![images](./images/meta.png)
+## Automatic Mode
 
-* If you lack imagination or challenge you could also ask for an objective to be set for you
+Okay...so you've played dozens of RPG's and your getting bored...why not automate it all.
 
-    ```
-    /meta set a trivial objective for me
-    ```
-    ```
-    Your first objective is to gather information about a local gang known as the "Neon Serpents." They are rumored to be involved in a high-stakes heist that could disrupt the balance of power in CyberPunkropolis. To begin, try to locate a knowledgeable informant who can provide more details about the gang and their activities.
-    ```
+Use the `--auto` flag to have AI play the game as well.
+
+```bash
+python chatrpg.py --auto
+```
+
+![](./images/auto.png)
