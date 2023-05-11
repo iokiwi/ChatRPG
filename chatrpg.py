@@ -1,4 +1,5 @@
 import os
+import time
 import logging
 from argparse import ArgumentParser
 
@@ -92,12 +93,20 @@ player_messages = [
     }
 ]
 
+
+def typing_effect(text, delay=0.01, color="white"):
+    for character in text:
+        print(colored(character, color), end='', flush=True)
+        time.sleep(delay)
+    print("\n")
+
 while True:
     # 1. Get the game prompt
     response = openai.ChatCompletion.create(model=GAME_MODEL, messages=game_messages)
     response = response.choices[0]["message"]["content"]
     game_messages.append({"role": "assistant", "content": response})
-    print(colored(response, "green"), "\n")
+
+    typing_effect(response, color="green")
 
     if args.auto:
         player_messages.append({"role": "user", "content": response})
@@ -110,7 +119,8 @@ while True:
         game_messages.append({"role": "user", "content": response})
         player_messages.append({"role": "assistant", "content": response})
 
-        print(">", response, "\n")
+        typing_effect("> " + response)
+
     else:
         prompt = ""
         while prompt == "":

@@ -50,4 +50,4 @@ Use the `--auto` flag to have AI play the game as well.
 python chatrpg.py --auto
 ```
 
-![](./images/auto.png)
+![GIF of AI playing the text adventure](./images/auto2.gif)
