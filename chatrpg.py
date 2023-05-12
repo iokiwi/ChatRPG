@@ -1,13 +1,19 @@
 import os
 import time
-import logging
 from argparse import ArgumentParser
 
 import openai
 from termcolor import colored
 from dotenv import load_dotenv
 
-# logging.basicConfig(loglevel=logging.ERROR)
+GPT_MODEL_CHOICES = [
+    "gpt-4",
+    "gpt-4-0314",
+    "gpt-4-32k",
+    "gpt-4-32k-0314",
+    "gpt-3.5-turbo",
+    "gpt-3.5-turbo-0301",
+]
 
 load_dotenv()
 openai.organization = os.getenv("OPENAI_ORGANIZATION")
@@ -22,62 +28,38 @@ parser.add_argument(
     help="Have an AI play the game for you.",
 )
 parser.add_argument(
+    "--theme",
+    default="fantasy adventure",
+    help=("The theme for the RPG")
+)
+parser.add_argument(
     "--model",
     default="gpt-3.5-turbo",
-    choices=[
-        "gpt-4",
-        "gpt-4-0314",
-        "gpt-4-32k",
-        "gpt-4-32k-0314",
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-0301",
-    ],
     help=(
-        "The default GPT Model used by both the AI generating and playing the RPG Adventure. "
+        "Set the AI Model used for the player and game AIs. "
         "For information about available models see "
         "https://platform.openai.com/docs/models/model-endpoint-compatibility"
     ),
 )
 parser.add_argument(
     "--player-model",
-    # default="gpt-3.5-turbo",
-    choices=[
-        "gpt-4",
-        "gpt-4-0314",
-        "gpt-4-32k",
-        "gpt-4-32k-0314",
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-0301",
-    ],
     help=(
-        "The GPT Model used by the AI playing the RPG Adventure. Overrides the default model. "
-        "For information about available models see "
-        "https://platform.openai.com/docs/models/model-endpoint-compatibility"
+        "Set the AI Model used for the player AI. Overrides --model"
     ),
 )
 parser.add_argument(
     "--game-model",
-    choices=[
-        "gpt-4",
-        "gpt-4-0314",
-        "gpt-4-32k",
-        "gpt-4-32k-0314",
-        "gpt-3.5-turbo",
-        "gpt-3.5-turbo-0301",
-    ],
     help=(
-        "The GPT Model used by the AI generating the RPG Adventure. Overrides default model "
-        "For information about available models see "
-        "https://platform.openai.com/docs/models/model-endpoint-compatibility"
+        "Set the AI Model used for the game AI. Overrides --model"
     ),
 )
-args = parser.parse_args()
 
+args = parser.parse_args()
 PLAYER_MODEL = args.player_model or args.model
 GAME_MODEL = args.game_model or args.model
 
 with open("prompt.txt", "r") as f:
-    initial_prompt = "".join(f.readlines())
+    initial_prompt = "".join(f.readlines()).format(args.theme)
 
 game_messages = [{"role": "system", "content": initial_prompt}]
 player_messages = [
@@ -96,9 +78,10 @@ player_messages = [
 
 def typing_effect(text, delay=0.01, color="white"):
     for character in text:
-        print(colored(character, color), end='', flush=True)
+        print(colored(character, color), end="", flush=True)
         time.sleep(delay)
     print("\n")
+
 
 while True:
     # 1. Get the game prompt

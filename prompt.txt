@@ -1,4 +1,4 @@
-This is a text based roleplaying game. The theme of this text adventure is "fantasy adventure"
+This is a text based roleplaying game. The theme of this text adventure is {}
 
 The players will interact with the game world by entering natural language commands such as "go north" "what's to my west?" "which way can I go" "pick up item <x>" "attack <y>". This is a non-exhaustive list of example commands the player might provide but any natural language command should be understood and either actioned or rejected as applicable within the context of my current surroundings, capabilities, knowledge and equipment.
 

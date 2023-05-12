@@ -2,6 +2,8 @@
 
 Think old-school text RPG meets Dungeons & Dragons. Basically a ChatGPT powered Dungeon Master.
 
+![GIF of AI playing the text adventure](./images/auto.gif)
+
 Works pretty well with both GPT4 and GPT3.5
 
  * GPT4 has richer context but pretty text generation is very slow and the prompt quota is very limited.
@@ -40,7 +42,7 @@ Works pretty well with both GPT4 and GPT3.5
     python chatrpg.py
     ```
 
-## Automatic Mode
+### Automatic Mode
 
 Okay...so you've played dozens of RPG's and your getting bored...why not automate it all.
 
@@ -50,4 +52,18 @@ Use the `--auto` flag to have AI play the game as well.
 python chatrpg.py --auto
 ```
 
-![GIF of AI playing the text adventure](./images/auto2.gif)
+### More Options
+
+```
+usage: chatrpg.py [-h] [--auto] [--theme THEME] [--model MODEL] [--player-model PLAYER_MODEL] [--game-model GAME_MODEL]
+
+options:
+  -h, --help            show this help message and exit
+  --auto                Have an AI play the game for you.
+  --theme THEME         The theme for the RPG
+  --model MODEL         Set the AI Model used for the player and game AIs. For information about available models see https://platform.openai.com/docs/models/model-endpoint-compatibility
+  --player-model PLAYER_MODEL
+                        Set the AI Model used for the player AI. Overrides --model
+  --game-model GAME_MODEL
+                        Set the AI Model used for the game AI. Overrides --model
+```
